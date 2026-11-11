@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#18372f" />
+  <title>Mosslight Farm — A cozy creature-growing adventure</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Mosslight Farm home">
+        <span class="brand-mark">✿</span><span>MOSSLIGHT <b>FARM</b></span>
+      </a>
+      <div class="top-note"><span class="sun-dot"></span> A little wild, a little wonderful</div>
+      <button class="icon-button" id="soundButton" aria-label="Toggle sound" title="Toggle sound">♫</button>
+    </header>
+    <section class="game-layout">
+      <div class="world-column">
+        <div class="world-frame">
+          <div class="world-topline"><span class="location"><i></i> FERNHOLLOW HOMESTEAD</span><span class="weather"><span>☀</span> CLEAR SKIES</span></div>
+          <div class="canvas-wrap">
+            <canvas id="game" width="768" height="512" aria-label="Game world. Use WASD or arrow keys to move."></canvas>
+            <div class="toast" id="toast" aria-live="polite"></div>
+            <div class="battle-screen hidden" id="battleScreen">
+              <div class="battle-heading"><span>WILD ENCOUNTER</span><span class="battle-sparkle">✦</span></div>
+              <div class="battle-arena">
+                <div class="wild-card"><div class="wild-art" id="wildArt">✦</div><div class="wild-name" id="wildName">Mossling</div><div class="hp-track"><span id="wildHp"></span></div><small id="wildHpText">18 / 18 VIGOR</small></div>
+                <div class="battle-vs">✦</div>
+                <div class="buddy-card"><div class="buddy-art" id="buddyArt">●</div><div class="buddy-name" id="buddyName">Puddle</div><div class="hp-track"><span id="buddyHp"></span></div><small id="buddyHpText">24 / 24 VIGOR</small></div>
+              </div>
+              <div class="battle-message" id="battleMessage">A wild Mossling emerged from the meadow!</div>
+              <div class="battle-actions" id="battleActions">
+                <button class="battle-btn primary" id="attackButton">✦ <span>SPARK</span><small>Gentle strike</small></button>
+                <button class="battle-btn capture" id="captureButton">◉ <span>MAKE FRIEND</span><small id="orbCount">3 dew charms</small></button>
+                <button class="battle-btn flee" id="fleeButton">↗ <span>WAVE GOODBYE</span><small>Leave peacefully</small></button>
+              </div>
+              <button class="battle-continue hidden" id="battleContinue">Continue →</button>
+            </div>
+            <div class="starter-screen" id="starterScreen">
+              <div class="starter-card">
+                <div class="starter-eyebrow">A NEW CHAPTER BEGINS</div>
+                <h1>Welcome to<br><em>Fernhollow Farm</em></h1>
+                <p>Your aunt left you a little patch of earth—and a very curious friend. Pick your first companion.</p>
+                <div class="starter-options">
+                  <button class="starter-choice" data-starter="spriglet"><span class="starter-creature sprig">✿</span><b>Spriglet</b><small>Leaf • gentle &amp; brave</small></button>
+                  <button class="starter-choice" data-starter="bubbun"><span class="starter-creature bubble">◉</span><b>Bubbun</b><small>Water • sunny &amp; sweet</small></button>
+                  <button class="starter-choice" data-starter="cindercub"><span class="starter-creature ember">☼</span><b>Cindercub</b><small>Ember • warm &amp; curious</small></button>
+                </div>
+                <div class="starter-foot">No wrong choice — your adventure is yours. <span>✦</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="world-footer"><span><kbd>WASD</kbd> move</span><span><kbd>SPACE</kbd> interact</span><span><kbd>1</kbd> seed <kbd>2</kbd> water <kbd>3</kbd> charm</span><span class="footer-tip">Follow the little signposts ✦</span></div>
+        </div>
+        <div class="mobile-controls" aria-label="Touch controls">
+          <div class="dpad"><button data-move="up" aria-label="Move up">▲</button><button data-move="left" aria-label="Move left">◀</button><button data-move="down" aria-label="Move down">▼</button><button data-move="right" aria-label="Move right">▶</button></div>
+          <button class="touch-action" id="touchAction">✦<span>ACT</span></button>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <section class="profile-card">
+          <div class="profile-top"><div class="avatar">☺</div><div><div class="player-label">FARMER</div><div class="player-name">Fern <span>✎</span></div></div><div class="day-pill">DAY <b id="dayNumber">1</b></div></div>
+          <div class="energy-label"><span>GOOD ENERGY</span><span id="energyText">100 / 100</span></div><div class="energy-track"><span id="energyBar"></span></div>
+          <div class="weather-note"><span>☀</span><div><b>Spring, Day <span id="seasonDay">1</span></b><small>The air smells like rain &amp; possibility.</small></div></div>
+        </section>
+        <section class="panel quest-panel"><div class="panel-heading"><span>✦ TODAY'S LITTLE PLAN</span><span class="quiet">01</span></div><div class="quest-content"><div class="quest-icon">⌂</div><div><b>Make this place yours</b><p>Plant a seed and meet a new friend in the meadow.</p></div></div><div class="quest-progress"><span id="questBar"></span></div><div class="quest-foot" id="questText">0 of 2 happy beginnings</div></section>
+        <section class="panel party-panel"><div class="panel-heading"><span>YOUR BUDDIES</span><span class="quiet" id="partyCount">01 / 06</span></div><div id="partyList" class="party-list"><div class="empty-buddy">Choose a companion to begin ✦</div></div><button class="small-link" id="healButton">♡ Rest your buddies <span>free at home</span></button></section>
+        <section class="panel bag-panel"><div class="panel-heading"><span>POCKET BAG</span><span class="quiet">✦</span></div><div class="inventory-grid"><div class="item"><span class="item-icon seed-icon">✿</span><div><b id="seedCount">5</b><small>Moon seeds</small></div><kbd>1</kbd></div><div class="item"><span class="item-icon water-icon">♧</span><div><b>∞</b><small>Watering can</small></div><kbd>2</kbd></div><div class="item"><span class="item-icon charm-icon">◉</span><div><b id="charmCount">3</b><small>Dew charms</small></div><kbd>3</kbd></div><div class="item"><span class="item-icon coin-icon">✧</span><div><b id="coinCount">24</b><small>Sun coins</small></div></div></div></section>
+        <div class="side-hint"><span>☘</span><div><b>A note from Auntie</b><p>“Good things grow when you give them a little time.”</p></div></div>
+        <button id="sleepButton" class="sleep-button"><span>☾</span> Turn in for the night <small>at your cottage</small></button>
+      </aside>
+    </section>
+    <footer class="site-footer"><span>Made for slow mornings &amp; brave little hearts.</span><span>FERNHOLLOW · EST. SPRING <span id="footerYear">01</span></span></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
